@@ -1,0 +1,11 @@
+# Source map
+
+| Role | Class | Canonical source | Version/hash | Access state | Panel use |
+|---|---|---|---|---|---|
+| Paper | AUTHOR_EXACT | __PAPER_URL__ | __VERSION__ | AVAILABLE | Identity/caption/method |
+| Code | AUTHOR_EXACT | __CODE_URL__ | __COMMIT__ | AVAILABLE | __PANEL_CODE__ |
+| Data | AUTHOR_EXACT | __DATA_URL__ | __DATA_IDENTITY__ | __ACCESS_STATE__ | Scientific input |
+
+Unresolved conflicts: none recorded.
+
+

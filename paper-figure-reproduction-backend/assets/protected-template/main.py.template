@@ -1,0 +1,50 @@
+"""Routine entry point for __PAPER_IDENTITY__ Fig. __FIGURE_PANEL__."""
+
+from pathlib import Path
+
+from plot import run_backend
+
+PROJECT_ROOT = Path(__file__).resolve().parent
+
+# PlotXY soft palette; choose only colors actually used by this case.
+PLOTXY_PALETTE = {
+    "rose": "#F7CCCD", "apricot": "#F6DBAE", "lime": "#DCE79C",
+    "sky": "#96CFF0", "leaf": "#B8DA9B", "blue": "#9DD0F0",
+    "aqua": "#65D1CF", "mist": "#B4DCE1",
+}
+
+# 1. Paths and stable names
+INPUT_FILE = "example_input/__FIGURE_READY_FILE__"
+OUTPUT_PREFIX = "example_output/preview"
+
+# 2. Scientific/data parameters (adapt to the real author method)
+RANDOM_SEED = 0
+
+# 3. Color/layer parameters (keep semantic color identity stable)
+PRIMARY_COLOR = PLOTXY_PALETTE["rose"]
+SECONDARY_COLOR = PLOTXY_PALETTE["blue"]
+BACKGROUND_COLOR = "#FFFFFF"
+
+# 4. Geometry/text parameters (add only controls used by the backend)
+FIGURE_WIDTH = 6.0
+FIGURE_HEIGHT = 4.0
+DPI = 300
+
+
+def build_config() -> dict:
+    return {
+        "input": str(INPUT_FILE),
+        "output_prefix": str(OUTPUT_PREFIX),
+        "random_seed": RANDOM_SEED,
+        "primary_color": PRIMARY_COLOR,
+        "secondary_color": SECONDARY_COLOR,
+        "background_color": BACKGROUND_COLOR,
+        "figure_width": FIGURE_WIDTH,
+        "figure_height": FIGURE_HEIGHT,
+        "dpi": DPI,
+    }
+
+
+if __name__ == "__main__":
+    raise SystemExit(run_backend(build_config(), project_root=PROJECT_ROOT))
+

@@ -1,0 +1,153 @@
+---
+title: "__PLOT_FAMILY__"
+subtitle: "__PAPER_IDENTITY__ Fig. __FIGURE_PANEL__ · __LANGUAGE__ 后端复现"
+author: "PlotXY figure reproduction"
+date: "`r format(Sys.Date(), '%Y-%m-%d')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    number_sections: true
+    theme: flatly
+    df_print: default
+    css: report_style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+options(width = 120)
+input_path <- knitr::current_input(dir = TRUE)
+project_root <- if (nzchar(input_path)) dirname(normalizePath(input_path, winslash = "/")) else normalizePath(getwd(), winslash = "/")
+knitr::opts_knit$set(root.dir = project_root)
+p <- function(...) file.path(project_root, ...)
+read_lines <- function(path) if (file.exists(path)) readLines(path, warn = FALSE) else character()
+read_tsv <- function(path, n = -1) {
+  if (!file.exists(path)) return(data.frame(message = paste("Missing:", path)))
+  utils::read.delim(path, sep = "\t", quote = "", check.names = FALSE, nrows = n)
+}
+file_table <- function(paths) {
+  full <- p(paths)
+  data.frame(file = paths, exists = file.exists(full), size_bytes = ifelse(file.exists(full), file.info(full)$size, NA), row.names = NULL)
+}
+```
+
+# 这个 Rmd 的目的
+
+本文档说明 __PAPER_IDENTITY__ Fig. __FIGURE_PANEL__ 的完整后端交付：科学输入、作者代码映射、用户参数、绘图接口、当前输出、运行环境和验证证据。内容必须按当前案例适配，删除模板提示语和不适用段落。
+
+<div class="hero-note">推荐阅读顺序：先核对任务与输入，再查看参数和后端接口，最后比较生成图、参考图和验证结果。</div>
+
+<div class="summary-grid">
+  <div class="summary-card"><span class="label">Plot type</span><span class="value">__PLOT_FAMILY__</span></div>
+  <div class="summary-card"><span class="label">Figure</span><span class="value">Fig. __FIGURE_PANEL__</span></div>
+  <div class="summary-card"><span class="label">Entry</span><span class="value">__MAIN_FILE__</span></div>
+  <div class="summary-card"><span class="label">Status</span><span class="value">__STATUS__</span></div>
+</div>
+
+# 图形任务概述
+
+用表格说明论文、面板、图形语法、科学量、作者代码位置、复现等级和当前状态。随后说明每个面板/图层表达什么，以及哪些内容来自作者、哪些是 PlotXY 视觉适配。
+
+# 目录结构
+
+```text
+project_root/
+├── README.md
+├── __MAIN_FILE__ / __BACKEND_FILE__
+├── backend_contract.json / source_manifest.json
+├── __PLOT_FAMILY___{cn,en}.Rmd / .html
+├── report_style.css / package_list.txt / sessionInfo.txt
+├── docs/
+├── example_input/
+├── example_output/
+└── figure_ref/original_figure.*
+```
+
+```{r file-inventory, echo=FALSE}
+file_table(list.files(project_root, recursive = TRUE, full.names = FALSE))
+```
+
+# 核心输入文件
+
+说明每个输入的作用、作者代码映射、必填字段、验证条件、禁止项和是否可省略，但只对确实需要这些说明的输入展开。预览 6–10 行和约 4–8 个审计关键列，不展示超宽全表。
+
+# 选择状态文件
+
+说明样本、分组、类别、面板顺序等选择如何进入后端。若案例确实没有独立选择文件，明确说明选择由哪个 `main` 参数或配置键控制；CN/EN 同步保留或同步省略本节。
+
+# __MAIN_FILE__ 参数区
+
+按当前入口的真实分组分别列参数表，至少覆盖路径/输入、科学/映射、颜色/图层、几何/文字、导出。每张表包含 `parameter`、`default`、必要时的 `allowed` 和 `meaning`。参数名必须与代码和 resolved parameters 完全一致。
+
+PlotXY 可选柔和色板：`#F7CCCD`、`#F6DBAE`、`#DCE79C`、`#96CFF0`、`#B8DA9B`、`#9DD0F0`、`#65D1CF`、`#B4DCE1`。按语义和对比度选用，不要求每张图用完。
+
+# __BACKEND_FILE__ 命令行接口契约
+
+如果后端只接受 `--config`，只记录这一真实 CLI 参数，并按组解释配置键；如果有显式 CLI flags，则分必需、可选和示例命令。不得为了显得完整而虚构参数。
+
+```text
+__CLI_COMMAND__
+```
+
+# 输出文件解释
+
+用 `file | exists | size_bytes | purpose` 表格解释当前真正生成的 PNG、PDF、plot data/statistics、resolved parameters、validation、manifest、log 和 success marker。不要列出不存在或仅供内部验证的文件。
+
+# 图形预览
+
+## 当前生成图
+
+```{r generated-figure, echo=FALSE, out.width='90%', fig.align='center'}
+if (file.exists(p("example_output", "preview.png"))) knitr::include_graphics(p("example_output", "preview.png"))
+```
+
+## 当前最佳参考图
+
+```{r reference-figure, echo=FALSE, out.width='90%', fig.align='center'}
+reference <- list.files(p("figure_ref"), pattern = "^original_figure\\.", full.names = TRUE)
+if (length(reference)) knitr::include_graphics(reference[1])
+```
+
+# 中间结果表
+
+展示审计最关键的紧凑统计、验证或绘图数据预览。完整表保存在磁盘；此处不得依赖 CSS 强行压缩超宽表。
+
+# 运行方式
+
+```text
+__MAIN_COMMAND__
+__CLI_COMMAND__
+```
+
+再给出 CN/EN Rmd 的真实 `rmarkdown::render()` 命令，并说明 preparation 是否需要另行运行。
+
+# 依赖与环境
+
+```{r package-list}
+cat(paste(read_lines(p("package_list.txt")), collapse = "\n"))
+```
+
+```{r session-info}
+cat(paste(read_lines(p("sessionInfo.txt")), collapse = "\n"))
+```
+
+# 随机性和字体
+
+说明每个随机步骤、固定 seed、是否影响科学层或仅影响显示层，以及实际字体/跨平台替代策略。没有随机性时也应明确写出。
+
+# 后续整理和调用说明
+
+说明普通用户改哪些 `main` 参数、哪些变化只需重绘、哪些变化会使 Figure-ready 输入失效、调用方必须收集哪些输出，以及新增参数如何完成全链路同步。
+
+# 最小自查清单
+
+```{r final-checks, echo=FALSE}
+checks <- data.frame(
+  check = c("main exists", "backend exists", "Figure-ready input exists", "preview PNG exists", "preview PDF exists", "contract exists", "session info exists", "success marker exists"),
+  passed = c(file.exists(p("__MAIN_FILE__")), file.exists(p("__BACKEND_FILE__")), dir.exists(p("example_input")), file.exists(p("example_output", "preview.png")), file.exists(p("example_output", "preview.pdf")), file.exists(p("backend_contract.json")), file.exists(p("sessionInfo.txt")), file.exists(p("example_output", "preview.success.txt")))
+)
+checks
+```
+

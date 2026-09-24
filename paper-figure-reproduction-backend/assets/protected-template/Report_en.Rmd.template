@@ -1,0 +1,134 @@
+---
+title: "__PLOT_FAMILY__"
+subtitle: "__PAPER_IDENTITY__ Fig. __FIGURE_PANEL__ · __LANGUAGE__ backend reproduction"
+author: "PlotXY figure reproduction"
+date: "`r format(Sys.Date(), '%Y-%m-%d')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    number_sections: true
+    theme: flatly
+    df_print: default
+    css: report_style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+options(width = 120)
+input_path <- knitr::current_input(dir = TRUE)
+project_root <- if (nzchar(input_path)) dirname(normalizePath(input_path, winslash = "/")) else normalizePath(getwd(), winslash = "/")
+knitr::opts_knit$set(root.dir = project_root)
+p <- function(...) file.path(project_root, ...)
+read_lines <- function(path) if (file.exists(path)) readLines(path, warn = FALSE) else character()
+file_table <- function(paths) {
+  full <- p(paths)
+  data.frame(file = paths, exists = file.exists(full), size_bytes = ifelse(file.exists(full), file.info(full)$size, NA), row.names = NULL)
+}
+```
+
+# Purpose of This Rmd
+
+Document the complete backend delivery for __PAPER_IDENTITY__ Fig. __FIGURE_PANEL__: scientific inputs, author-code mapping, user parameters, plotting interface, current outputs, execution environment, and validation. Adapt every section to the current case and remove template instructions that do not apply.
+
+<div class="hero-note">Recommended order: verify the task and inputs, review parameters and the backend interface, then compare the generated figure, reference, and validation.</div>
+
+<div class="summary-grid">
+  <div class="summary-card"><span class="label">Plot type</span><span class="value">__PLOT_FAMILY__</span></div>
+  <div class="summary-card"><span class="label">Figure</span><span class="value">Fig. __FIGURE_PANEL__</span></div>
+  <div class="summary-card"><span class="label">Entry</span><span class="value">__MAIN_FILE__</span></div>
+  <div class="summary-card"><span class="label">Status</span><span class="value">__STATUS__</span></div>
+</div>
+
+# Figure Task Overview
+
+Use a compact table to identify the paper, panel, plot grammar, scientific quantity, author-code location, reproduction class, and current status. Explain what every panel/layer means and distinguish author content from PlotXY visual adaptation.
+
+# Directory Structure
+
+Show a compact package tree using real filenames; then render a current file inventory with existence and size.
+
+# Core Input Files
+
+For inputs that need it, document role, author-code mapping, required fields, validation, forbidden content, and whether omission is allowed. Preview only 6–10 rows and roughly 4–8 audit-critical columns.
+
+# Selection State
+
+Explain how sample, group, category, and panel-order selections enter the backend. If no separate selection file exists, identify the controlling main/config parameter. Keep CN/EN section parity.
+
+# __MAIN_FILE__ Parameter Area
+
+Render separate tables for the real parameter groups: paths/input, scientific/mapping, colors/layers, geometry/text, and export. Each table uses exact code names plus defaults, meaningful allowed values, and descriptions.
+
+PlotXY soft palette: `#F7CCCD`, `#F6DBAE`, `#DCE79C`, `#96CFF0`, `#B8DA9B`, `#9DD0F0`, `#65D1CF`, `#B4DCE1`. Select semantically and preserve readable contrast; a figure need not use every color.
+
+# __BACKEND_FILE__ Command-line Interface Contract
+
+Document only the real interface. For a config-only backend, show `--config`, grouped config keys, and the replay command. For explicit flags, separate required and optional arguments. Never invent flags to imitate a reference report.
+
+```text
+__CLI_COMMAND__
+```
+
+# Output File Explanation
+
+Use a `file | exists | size_bytes | purpose` table for outputs actually generated: PNG/PDF, plot data/statistics, resolved parameters, validation, manifest, log, and success marker as applicable. Exclude internal release-audit files from the end-user package.
+
+# Figure Preview
+
+## Current generated figure
+
+```{r generated-figure, echo=FALSE, out.width='90%', fig.align='center'}
+if (file.exists(p("example_output", "preview.png"))) knitr::include_graphics(p("example_output", "preview.png"))
+```
+
+## Current best reference
+
+```{r reference-figure, echo=FALSE, out.width='90%', fig.align='center'}
+reference <- list.files(p("figure_ref"), pattern = "^original_figure\\.", full.names = TRUE)
+if (length(reference)) knitr::include_graphics(reference[1])
+```
+
+# Intermediate Result Tables
+
+Show compact audit-critical statistics, validation, or plot-data previews. Keep full tables on disk instead of forcing very wide tables into HTML.
+
+# How to Run
+
+```text
+__MAIN_COMMAND__
+__CLI_COMMAND__
+```
+
+Add the real CN/EN `rmarkdown::render()` commands and explain whether preparation runs separately.
+
+# Dependencies and Environment
+
+```{r package-list}
+cat(paste(read_lines(p("package_list.txt")), collapse = "\n"))
+```
+
+```{r session-info}
+cat(paste(read_lines(p("sessionInfo.txt")), collapse = "\n"))
+```
+
+# Randomness and Fonts
+
+Describe every stochastic step, fixed seed, scientific versus display impact, and the actual font/substitution strategy. Explicitly state when no randomness is present.
+
+# Subsequent Organization and Invocation
+
+Explain which main parameters routine users edit, which changes only rerender, which invalidate Figure-ready input, which outputs callers collect, and how a new parameter is synchronized end to end.
+
+# Minimal Self-checklist
+
+```{r final-checks, echo=FALSE}
+checks <- data.frame(
+  check = c("main exists", "backend exists", "Figure-ready input exists", "preview PNG exists", "preview PDF exists", "contract exists", "session info exists", "success marker exists"),
+  passed = c(file.exists(p("__MAIN_FILE__")), file.exists(p("__BACKEND_FILE__")), dir.exists(p("example_input")), file.exists(p("example_output", "preview.png")), file.exists(p("example_output", "preview.pdf")), file.exists(p("backend_contract.json")), file.exists(p("sessionInfo.txt")), file.exists(p("example_output", "preview.success.txt")))
+)
+checks
+```
+

@@ -1,0 +1,5 @@
+# Method boundary
+
+State which author computations are preserved, which steps prepare Figure-ready input, which steps run during routine plotting, and which changes affect only rendering/evidence.
+
+

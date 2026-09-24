@@ -1,0 +1,7 @@
+interface:
+  display_name: "Paper Figure Backend"
+  short_description: "Reproduce paper panels as auditable plotting backends"
+  default_prompt: "Use $paper-figure-reproduction-backend to reproduce a named scientific paper panel as a compact, evidence-backed backend delivery."
+
+policy:
+  allow_implicit_invocation: true

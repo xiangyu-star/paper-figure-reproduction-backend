@@ -1,0 +1,29 @@
+# Routine entry point for __PAPER_IDENTITY__ Fig. __FIGURE_PANEL__
+
+script_path <- function() {
+  file_arg <- grep("^--file=", commandArgs(trailingOnly = FALSE), value = TRUE)
+  if (length(file_arg)) return(sub("^--file=", "", file_arg[[1]]))
+  ofiles <- Filter(Negate(is.null), lapply(sys.frames(), function(frame) frame$ofile))
+  if (length(ofiles)) return(ofiles[[length(ofiles)]])
+  stop("Cannot resolve main.R path")
+}
+project_root <- normalizePath(dirname(script_path()), winslash = "/", mustWork = TRUE)
+
+# 1. Paths and stable names
+input_file <- file.path(project_root, "example_input", "__FIGURE_READY_FILE__")
+output_prefix <- file.path(project_root, "example_output", "preview")
+
+# 2. Scientific parameters
+random_seed <- 0L
+
+# 3. Rendering parameters
+figure_width <- 6
+figure_height <- 4
+dpi <- 300L
+
+# Execution: normally no edits needed below
+source(file.path(project_root, "plot.R"), local = TRUE)
+config <- list(input = input_file, output_prefix = output_prefix, random_seed = random_seed,
+               figure_width = figure_width, figure_height = figure_height, dpi = dpi)
+run_backend(config)
+

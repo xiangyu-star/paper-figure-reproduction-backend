@@ -1,0 +1,21 @@
+# Scientific contract
+
+## Required input
+
+- File: `example_input/__FIGURE_READY_FILE__`
+- Required columns/types: __REQUIRED_COLUMNS__
+- Row and identity rules: __ROW_RULES__
+- Required categories and order: __CATEGORY_RULES__
+
+## Computation
+
+- Transform/normalization: __TRANSFORMS__
+- Coordinates/statistics: __METHOD__
+- Scientific mappings: __MAPPINGS__
+- Randomness: __RANDOMNESS__
+
+## Validation
+
+Empty input, missing categories, invalid domains, non-finite required values, key mismatch, or unexplained source identity change are hard failures.
+
+

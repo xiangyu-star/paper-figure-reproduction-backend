@@ -1,0 +1,36 @@
+{
+  "contract_version": "1.1.0",
+  "package_identity": {
+    "paper": "__PAPER_IDENTITY__",
+    "doi": "__DOI__",
+    "figure_panel": "__FIGURE_PANEL__",
+    "plot_family": "__PLOT_FAMILY__",
+    "language": "__LANGUAGE__",
+    "status": "__STATUS__"
+  },
+  "entrypoint": "__MAIN_FILE__",
+  "backend": "__BACKEND_FILE__",
+  "routine_input": [{"path": "example_input/__FIGURE_READY_FILE__", "role": "figure_ready", "required": true}],
+  "parameters": [
+    {"name": "random_seed", "type": "integer", "scientific": true, "default": 0},
+    {"name": "primary_color", "type": "color", "scientific": false, "default": "#F7CCCD"},
+    {"name": "secondary_color", "type": "color", "scientific": false, "default": "#9DD0F0"},
+    {"name": "background_color", "type": "color", "scientific": false, "default": "#FFFFFF"},
+    {"name": "figure_width", "type": "number", "scientific": false, "default": 6.0},
+    {"name": "figure_height", "type": "number", "scientific": false, "default": 4.0},
+    {"name": "dpi", "type": "integer", "scientific": false, "default": 300}
+  ],
+  "parameter_trace_rule": "Every user-facing control appears in main defaults, config/CLI, backend use, resolved parameters, this contract, and both manuals.",
+  "plotxy_soft_palette": ["#F7CCCD", "#F6DBAE", "#DCE79C", "#96CFF0", "#B8DA9B", "#9DD0F0", "#65D1CF", "#B4DCE1"],
+  "required_outputs": [
+    "example_output/preview.config.json",
+    "example_output/preview.resolved_parameters.json",
+    "example_output/preview.validation.json",
+    "example_output/preview.run_manifest.json",
+    "example_output/preview.png",
+    "example_output/preview.pdf",
+    "example_output/preview.success.txt"
+  ],
+  "success_condition": "All contracted outputs are current, non-empty and validated; success marker is written last."
+}
+

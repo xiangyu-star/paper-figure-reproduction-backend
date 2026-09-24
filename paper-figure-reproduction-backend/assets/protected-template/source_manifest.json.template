@@ -1,0 +1,10 @@
+{
+  "manifest_version": "1.0.0",
+  "checked_at": "__CHECK_DATE__",
+  "paper": {"class": "AUTHOR_EXACT", "doi": "__DOI__", "url": "__PAPER_URL__", "figure_panel": "__FIGURE_PANEL__"},
+  "corrections": [],
+  "code": {"class": "__CODE_CLASS__", "repository": "__CODE_URL__", "commit": "__COMMIT__"},
+  "data": []
+}
+
+

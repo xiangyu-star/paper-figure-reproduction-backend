@@ -1,0 +1,23 @@
+# Stable backend skeleton. Implement the case-specific figure builder.
+
+validate_input <- function(path) {
+  if (!file.exists(path) || file.info(path)$size <= 0) stop("Missing or empty Figure-ready input: ", path)
+}
+
+build_figure <- function(config) {
+  stop("Implement the case-specific scientific rendering function")
+}
+
+run_backend <- function(config) {
+  validate_input(config$input)
+  dir.create(dirname(config$output_prefix), recursive = TRUE, showWarnings = FALSE)
+  jsonlite::write_json(config, paste0(config$output_prefix, ".config.json"), pretty = TRUE, auto_unbox = TRUE)
+  build_figure(config)
+  required <- paste0(config$output_prefix, c(".png", ".pdf"))
+  missing <- required[!file.exists(required) | file.info(required)$size <= 0]
+  if (length(missing)) stop("Required outputs missing or empty: ", paste(missing, collapse = ", "))
+  writeLines("SUCCESS", paste0(config$output_prefix, ".success.txt"))
+  invisible(TRUE)
+}
+
+

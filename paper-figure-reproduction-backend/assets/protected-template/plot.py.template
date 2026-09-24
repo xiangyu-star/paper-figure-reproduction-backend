@@ -1,0 +1,59 @@
+"""Stable backend/CLI skeleton. Replace the case-specific figure builder."""
+
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+
+from matplotlib.colors import is_color_like
+
+
+def validate_input(path: Path) -> None:
+    if not path.is_file() or path.stat().st_size == 0:
+        raise ValueError(f"Missing or empty Figure-ready input: {path}")
+
+
+def build_figure(config: dict):
+    raise NotImplementedError("Implement the case-specific scientific rendering function")
+
+
+def validate_config(config: dict) -> None:
+    for key in ("primary_color", "secondary_color", "background_color"):
+        if key in config and not is_color_like(config[key]):
+            raise ValueError(f"Invalid color for {key}: {config[key]}")
+
+
+def run_backend(config: dict, project_root: Path | None = None) -> int:
+    root = (project_root or Path.cwd()).resolve()
+    input_path = (root / config["input"]).resolve()
+    output_prefix = (root / config["output_prefix"]).resolve()
+    success = output_prefix.with_suffix(".success.txt")
+    if success.exists():
+        success.unlink()
+    validate_config(config)
+    validate_input(input_path)
+    output_prefix.parent.mkdir(parents=True, exist_ok=True)
+    config_path = output_prefix.with_suffix(".config.json")
+    config_path.write_text(json.dumps(config, indent=2), encoding="utf-8")
+    build_figure(config)
+    required = [output_prefix.with_suffix(".png"), output_prefix.with_suffix(".pdf")]
+    missing = [str(p) for p in required if not p.is_file() or p.stat().st_size == 0]
+    if missing:
+        raise RuntimeError(f"Required outputs missing or empty: {missing}")
+    success.write_text("SUCCESS\n", encoding="utf-8")
+    return 0
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", type=Path, required=True)
+    return parser.parse_args()
+
+
+if __name__ == "__main__":
+    args = parse_args()
+    config_path = args.config.resolve()
+    config = json.loads(config_path.read_text(encoding="utf-8"))
+    raise SystemExit(run_backend(config, project_root=config_path.parent.parent))
+

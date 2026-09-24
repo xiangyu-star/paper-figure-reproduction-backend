@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "files": {
+    "backend_contract.json.template": "050e31565685fe355603ff579b6cb46eca6657ed746dda0d9267d15e3ba2bd88",
+    "example_input.README.md.template": "88c0ce4eb6ef9c38c800116a03033e94d81c310d017e305ed8a4b8476da00547",
+    "main.py.template": "d3e45714485914b1f0f95a8446a05cd0ab23626f9540de355b5f2c594d329e8c",
+    "main.R.template": "a8eba60904adf181a6dacb0c311d0a42432c84d068a5bebfcde4623967cee4dc",
+    "METHOD.md.template": "412ed7e5c5fe270453fa4bb42cf6051bcbe39088148d985069297a99683a7ba4",
+    "package_list.txt.template": "2c3f9d7cabee7d23c8976023b1e94bb4f53d68e823eccc9074e82d6848ca3424",
+    "plot.py.template": "a520329f73a7650c223488c8662d5d3fa27a2d3a2b7b952542913245ebb2e3f3",
+    "plot.R.template": "e8b16e84dbbd8c880e6fbcea1bc638a6ba5c15b2a0c4b1cb5d38c1a134ccd6eb",
+    "README.md.template": "5f6d8778b903476b018a8002f3b5a31d31e04b3bf4d0959f3d7463ec0f2c17bd",
+    "Report_cn.Rmd.template": "716387ecc6b826b5b6aa0052e9c482e17acf323b4f5e15ea004084bb958910f8",
+    "Report_en.Rmd.template": "40c42b8cc4c64420f9908e2e21ded784f0bd3433832e005f017235e419153a96",
+    "report_style.css": "6315913e83f2c2fd7b1dace1e324bfd4be2baab4a90fb55d46cd3d18cfb31732",
+    "REPRODUCTION_NOTES.md.template": "526551d3881118882543da1fe6bb4014eb988e63486dbb59863bfb9b6a1ebbd0",
+    "SCIENTIFIC_CONTRACT.md.template": "21a387eda123f2a4758f8c06d4e4bb81e8216d67c2783ea1481bc856286164c0",
+    "sessionInfo.txt.template": "8533eb5efbe227c4e919cce13a641692f55cf1b5b232b4c0cbcef61abf384fd0",
+    "source_manifest.json.template": "9870905e3dd6f49c1ce50af322b8eb57144f71c8707566f6de4b96a4895eb2b0",
+    "SOURCE_MAP.md.template": "ef1c8349bf0128f52e057c74932addd76c6f5625f4a97d99744eae25c1c2324c"
+  }
+}
+
